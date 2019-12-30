@@ -4,17 +4,8 @@
 
     android:id="@+id/wv_knowledge_detail"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".view.activity.KnowledgeDetailActivity">
 
-    <Button
-        android:id="@+id/btn_next_knowledge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/runded_button"
-        android:gravity="end"
-        android:text="Selanjutnya"
-        android:textAllCaps="false"
-        android:textColor="#FFFF"/>
 
 </WebView>

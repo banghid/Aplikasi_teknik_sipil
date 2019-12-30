@@ -18,7 +18,7 @@ class KnowledgeDetailActivity : AppCompatActivity() {
         try {
             val knowledgeData: KnowledgeModel = intent.extras!!.getParcelable("KNOWLEDGE_DATA")!!
             wv_knowledge_detail.loadDataWithBaseURL(
-                "file:///android_assets/",
+                "file:///android_asset/",
                 knowledgeData.knowledgeHTML,
                 "text/html",
                 "UTF-8",

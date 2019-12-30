@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.KnowledgeDetailActivity"></activity>
+        <activity android:name=".view.activity.KnowledgeDetailActivity"
+            android:parentActivityName=".view.activity.KnowledgeFlowActivity"></activity>
         <activity
             android:name=".view.activity.KnowledgeFlowActivity"
             android:parentActivityName=".view.activity.MainActivity" />
