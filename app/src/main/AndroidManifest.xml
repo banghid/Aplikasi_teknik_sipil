@@ -10,11 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".view.activity.KnowledgeDetailActivity"
-            android:parentActivityName=".view.activity.KnowledgeFlowActivity"></activity>
+            android:parentActivityName=".view.activity.KnowledgeFlowActivity"
+            ></activity>
         <activity
             android:name=".view.activity.KnowledgeFlowActivity"
-            android:parentActivityName=".view.activity.MainActivity" />
-        <activity android:name=".view.activity.MainActivity">
+            android:launchMode="singleTop"
+            android:parentActivityName=".view.activity.MainActivity"/>
+        <activity android:name=".view.activity.MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

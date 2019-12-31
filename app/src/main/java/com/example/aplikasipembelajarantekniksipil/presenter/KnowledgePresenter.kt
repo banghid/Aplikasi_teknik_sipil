@@ -7,7 +7,7 @@ import com.example.aplikasipembelajarantekniksipil.view.view_interface.Knowledge
 
 class KnowledgePresenter(private var view:KnowledgeView){
 
-    fun setKnowledge(databaseAccess: DatabaseAccess,chapterId:Int){
+    fun setKnowledge(databaseAccess: DatabaseAccess,chapterId:Int?){
         databaseAccess.openDatabase()
         Log.d(">>>>>KnowledgePresenter","success open database")
         val cursor = databaseAccess.getKnowledges(chapterId)

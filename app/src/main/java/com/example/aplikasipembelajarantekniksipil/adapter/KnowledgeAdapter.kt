@@ -35,6 +35,10 @@ class KnowledgeAdapter(private var context: Context, private var knowledgeList: 
         return TimelineView.getTimeLineViewType(position,itemCount)
     }
 
+    fun getList():ArrayList<KnowledgeModel>{
+        return knowledgeList
+    }
+
 }
 
 class KnowledgeHolder(view: View, viewType:Int):RecyclerView.ViewHolder(view){

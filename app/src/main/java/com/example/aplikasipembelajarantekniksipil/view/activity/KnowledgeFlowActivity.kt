@@ -22,19 +22,28 @@ class KnowledgeFlowActivity : AppCompatActivity(),KnowledgeView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_knowledge_flow)
 
+        if (savedInstanceState?.getParcelableArrayList<KnowledgeModel>("data")!=null){
+            val dataTemp = ArrayList<KnowledgeModel>(savedInstanceState.getParcelableArrayList("data")!!)
+            knowledgeAdapter = KnowledgeAdapter(
+                this,
+                dataTemp
+            )
+            knowledgeAdapter.notifyDataSetChanged()
+        }else{
+            val chapterData = intent?.extras?.getInt("CHAPTER_ID")
 
-        val chapterData: Int = intent.extras!!.getInt("CHAPTER_ID",0)
-        Log.d(">>>>>ChapterData",chapterData.toString())
-        Log.d(">>>>>>>ChapterID ", chapterData.toString())
+            Log.d(">>>>>ChapterData",chapterData.toString())
+            Log.d(">>>>>>>ChapterID ", chapterData.toString())
 
-        val databaseAccess:DatabaseAccess = DatabaseAccess.getInstance(this)
-        Log.d(">>>>>KnowledgeFlow","sucess instance database access")
-        knowledgeAdapter = KnowledgeAdapter(this,knowledgesData)
-        Log.d(">>>>>KnowledgeFlow","sucess instance an adapter")
-        knowledgePresenter = KnowledgePresenter(this)
-        Log.d(">>>>>KnowledgeFlow","sucess intance a presenter")
-        knowledgePresenter.setKnowledge(databaseAccess,chapterData)
-        Log.d(">>>>>KnowledgeFlow","sucess gathering data")
+            val databaseAccess:DatabaseAccess = DatabaseAccess.getInstance(this)
+            Log.d(">>>>>KnowledgeFlow","success instance database access")
+            knowledgeAdapter = KnowledgeAdapter(this,knowledgesData)
+            Log.d(">>>>>KnowledgeFlow","success instance an adapter")
+            knowledgePresenter = KnowledgePresenter(this)
+            Log.d(">>>>>KnowledgeFlow","success instance a presenter")
+            knowledgePresenter.setKnowledge(databaseAccess,chapterData)
+            Log.d(">>>>>KnowledgeFlow","success gathering data")
+        }
 
         rv_knowledge_flow.layoutManager = LinearLayoutManager(this)
         rv_knowledge_flow.setHasFixedSize(true)
@@ -45,4 +54,11 @@ class KnowledgeFlowActivity : AppCompatActivity(),KnowledgeView {
         this.knowledgesData.addAll(knowledges)
         knowledgeAdapter.notifyDataSetChanged()
     }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState?.putParcelableArrayList("data",knowledgeAdapter.getList())
+        super.onSaveInstanceState(outState)
+    }
+
+
 }
