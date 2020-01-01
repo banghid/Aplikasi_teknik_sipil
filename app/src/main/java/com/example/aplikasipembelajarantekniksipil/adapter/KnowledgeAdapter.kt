@@ -8,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.aplikasipembelajarantekniksipil.R
 import com.example.aplikasipembelajarantekniksipil.model.KnowledgeModel
+import com.example.aplikasipembelajarantekniksipil.model.UserStageModel
 import com.example.aplikasipembelajarantekniksipil.view.activity.KnowledgeDetailActivity
 import com.github.vipulasri.timelineview.TimelineView
 import kotlinx.android.synthetic.main.knowledge_item.view.*
 
 
-class KnowledgeAdapter(private var context: Context, private var knowledgeList: ArrayList<KnowledgeModel>):RecyclerView.Adapter<KnowledgeHolder>(){
+class KnowledgeAdapter(private var context: Context, private var knowledgeList: ArrayList<KnowledgeModel>,private var userStageList: List<UserStageModel>):RecyclerView.Adapter<KnowledgeHolder>(){
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): KnowledgeHolder {
         return KnowledgeHolder(
             LayoutInflater.from(p0.context).inflate(
@@ -28,7 +29,7 @@ class KnowledgeAdapter(private var context: Context, private var knowledgeList: 
     override fun getItemCount(): Int = knowledgeList.size
 
     override fun onBindViewHolder(p0: KnowledgeHolder, p1: Int) {
-        p0.bindKnowledge(context,knowledgeList[p1])
+        p0.bindKnowledge(context,knowledgeList[p1],userStageList)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -47,19 +48,34 @@ class KnowledgeHolder(view: View, viewType:Int):RecyclerView.ViewHolder(view){
     private var knowledgeCaption = view.knowledge_caption
     private var knowledgeButton = view.knowledge_button
     private var knowledgeTimeline = view.knowledge_timeline
+    private var stageDone: Boolean = false
 
     init {
         knowledgeTimeline.initLine(viewType)
     }
 
-    fun bindKnowledge(context: Context, knowledgeData: KnowledgeModel){
+    fun bindKnowledge(context: Context, knowledgeData: KnowledgeModel, userStageList: List<UserStageModel>){
         knowledgeTitle.text = knowledgeData.knowledgeTitle
         knowledgeCaption.text = knowledgeData.knowledgeCaption
+        val currentStage = UserStageModel(knowledgeData.knowledgeId, knowledgeData.chapterId)
+        var i = 0
+        while (i< userStageList.size){
+            if (userStageList[i] == currentStage){
+                stageDone = true
+                break
+            }
+            i++
+        }
+
         if (knowledgeData.knowledgeQuiz == "yes"){
             knowledgeButton.text = context.getString(R.string.kerjakan_button)
         }else knowledgeButton.text = context.getString(R.string.pelajari_button)
 
-        knowledgeButton.setOnClickListener(){
+        if (stageDone){
+            knowledgeButton.background = context.getDrawable(R.drawable.rounded_clear_button)
+        }else knowledgeButton.background = context.getDrawable(R.drawable.runded_button)
+
+        knowledgeButton.setOnClickListener{
             val knowledgeDetailIntent = Intent(context.applicationContext,KnowledgeDetailActivity::class.java)
             knowledgeDetailIntent.putExtra("KNOWLEDGE_DATA",knowledgeData)
             context.startActivity(knowledgeDetailIntent)

@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), ChapterView {
     private lateinit var chapterPresenter: ChapterPresenter
     private lateinit var chapterAdapter: ChapterAdapter
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

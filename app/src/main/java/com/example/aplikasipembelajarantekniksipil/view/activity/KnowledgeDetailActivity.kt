@@ -13,8 +13,6 @@ class KnowledgeDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_knowledge_detail)
 
-
-
         try {
             val knowledgeData: KnowledgeModel = intent.extras!!.getParcelable("KNOWLEDGE_DATA")!!
             wv_knowledge_detail.loadDataWithBaseURL(
@@ -29,4 +27,5 @@ class KnowledgeDetailActivity : AppCompatActivity() {
         }
 
     }
+
 }
