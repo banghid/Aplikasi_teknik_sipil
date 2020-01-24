@@ -10,6 +10,7 @@ import com.example.aplikasipembelajarantekniksipil.R
 import com.example.aplikasipembelajarantekniksipil.model.KnowledgeModel
 import com.example.aplikasipembelajarantekniksipil.model.UserStageModel
 import com.example.aplikasipembelajarantekniksipil.view.activity.KnowledgeDetailActivity
+import com.example.aplikasipembelajarantekniksipil.view.activity.QuizDashboardActivity
 import com.github.vipulasri.timelineview.TimelineView
 import kotlinx.android.synthetic.main.knowledge_item.view.*
 
@@ -69,16 +70,23 @@ class KnowledgeHolder(view: View, viewType:Int):RecyclerView.ViewHolder(view){
 
         if (knowledgeData.knowledgeQuiz == "yes"){
             knowledgeButton.text = context.getString(R.string.kerjakan_button)
-        }else knowledgeButton.text = context.getString(R.string.pelajari_button)
-
+            knowledgeButton.setOnClickListener{
+                val quizDashboardIntent = Intent(context.applicationContext,QuizDashboardActivity::class.java)
+                quizDashboardIntent.putExtra("KNOWLEDGE_DATA",knowledgeData)
+                context.startActivity(quizDashboardIntent)
+            }
+        }else {
+            knowledgeButton.text = context.getString(R.string.pelajari_button)
+            knowledgeButton.setOnClickListener{
+                val knowledgeDetailIntent = Intent(context.applicationContext,KnowledgeDetailActivity::class.java)
+                knowledgeDetailIntent.putExtra("KNOWLEDGE_DATA",knowledgeData)
+                context.startActivity(knowledgeDetailIntent)
+            }
+        }
         if (stageDone){
             knowledgeButton.background = context.getDrawable(R.drawable.rounded_clear_button)
         }else knowledgeButton.background = context.getDrawable(R.drawable.runded_button)
 
-        knowledgeButton.setOnClickListener{
-            val knowledgeDetailIntent = Intent(context.applicationContext,KnowledgeDetailActivity::class.java)
-            knowledgeDetailIntent.putExtra("KNOWLEDGE_DATA",knowledgeData)
-            context.startActivity(knowledgeDetailIntent)
-        }
+
     }
 }

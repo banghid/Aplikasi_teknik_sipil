@@ -36,7 +36,11 @@ class DatabaseAccess{
     }
 
     fun getKnowledges(chapterId:Int?):Cursor{
-        return database.rawQuery("SELECT * FROM knowledge_table WHERE chapter_id = $chapterId",null)
+        return database.rawQuery("SELECT * FROM knowledge_table WHERE chapter_id = $chapterId ORDER BY knowledge_number",null)
+    }
+
+    fun getQuizes(knowledgeId:Int?):Cursor{
+        return database.rawQuery("SELECT * FROM quiz_table WHERE knowledge_id = $knowledgeId", null)
     }
 
 }

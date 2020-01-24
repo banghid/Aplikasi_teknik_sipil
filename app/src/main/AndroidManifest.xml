@@ -11,21 +11,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.KnowledgeDetailActivity"
-            android:parentActivityName=".view.activity.KnowledgeFlowActivity"
-            ></activity>
         <activity
-            android:name=".view.activity.KnowledgeFlowActivity"
-            android:launchMode="singleTop"
-            android:parentActivityName=".view.activity.MainActivity"/>
-        <activity android:name=".view.activity.MainActivity"
-            android:launchMode="singleTop">
+            android:name=".view.activity.QuizDashboardActivity"
+            android:parentActivityName=".view.activity.KnowledgeFlowActivity"></activity>
+        <activity
+            android:name=".view.activity.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.activity.KnowledgeDetailActivity"
+            android:parentActivityName=".view.activity.KnowledgeFlowActivity" />
+        <activity
+            android:name=".view.activity.KnowledgeFlowActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".view.activity.MainActivity" />
+        <activity
+            android:name=".view.activity.MainActivity"
+            android:launchMode="singleTop"></activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
