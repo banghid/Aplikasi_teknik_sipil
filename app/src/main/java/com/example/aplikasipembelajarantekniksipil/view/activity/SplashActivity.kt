@@ -2,6 +2,7 @@ package com.example.aplikasipembelajarantekniksipil.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.text.Html
@@ -18,6 +19,8 @@ class SplashActivity : AppCompatActivity() {
     lateinit var slidePager: ViewPager
     lateinit var dotsLayout: LinearLayout
     var currentPage:Int = 0
+    private val SPLASH_TIME_OUT_1 = 4000
+    private val SPLASH_TIME_OUT_2 = 8000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,9 +65,7 @@ class SplashActivity : AppCompatActivity() {
                 if (nextButton.text == "Lanjut"){
                     slidePager.currentItem = currentPage + 1
                 }else{
-                    val intentMainActivity = Intent(applicationContext,MainActivity::class.java)
-                    startActivity(intentMainActivity)
-                    finish()
+                    toMainActivity()
                 }
             }
         })
@@ -75,6 +76,22 @@ class SplashActivity : AppCompatActivity() {
             }
 
         })
+
+        Handler().postDelayed(object : Runnable{
+            override fun run() {
+                if (currentPage<1){
+                    slidePager.currentItem = currentPage + 1
+                }else toMainActivity()
+            }
+        },SPLASH_TIME_OUT_1.toLong()
+        )
+
+        Handler().postDelayed(object : Runnable{
+            override fun run() {
+                toMainActivity()
+            }
+        },SPLASH_TIME_OUT_2.toLong()
+        )
     }
 
     fun addDotsIndicator(postion:Int){
@@ -93,6 +110,12 @@ class SplashActivity : AppCompatActivity() {
         if (mDots.size > 0){
             mDots[postion].setTextColor(resources.getColor(R.color.colorWhite))
         }
+    }
+
+    fun toMainActivity(){
+        val intentMainActivity = Intent(applicationContext,MainActivity::class.java)
+        startActivity(intentMainActivity)
+        finish()
     }
 
 
