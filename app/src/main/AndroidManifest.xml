@@ -12,8 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".view.activity.QuizDetailActivity"
+            android:theme="@style/SplashTheme"></activity>
+        <activity
             android:name=".view.activity.QuizDashboardActivity"
-            android:parentActivityName=".view.activity.KnowledgeFlowActivity"></activity>
+            android:parentActivityName=".view.activity.KnowledgeFlowActivity" />
         <activity
             android:name=".view.activity.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -32,7 +35,7 @@
             android:parentActivityName=".view.activity.MainActivity" />
         <activity
             android:name=".view.activity.MainActivity"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop" />
 
         <meta-data
             android:name="preloaded_fonts"

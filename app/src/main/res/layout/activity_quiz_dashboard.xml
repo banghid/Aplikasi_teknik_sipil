@@ -33,12 +33,12 @@
         android:id="@+id/rv_dashboard_answer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/knowledge_button"
+        android:layout_above="@+id/start_button"
         android:layout_below="@id/last_score_tv"
         tools:listitem="@layout/dashboard_answer_item" />
 
     <Button
-        android:id="@+id/knowledge_button"
+        android:id="@+id/start_button"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_alignParentBottom="true"

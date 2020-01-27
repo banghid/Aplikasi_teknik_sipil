@@ -2,6 +2,7 @@ package com.example.aplikasipembelajarantekniksipil.presenter
 
 import android.util.Log
 import com.example.aplikasipembelajarantekniksipil.database.DatabaseAccess
+import com.example.aplikasipembelajarantekniksipil.model.OptionModel
 import com.example.aplikasipembelajarantekniksipil.model.QuizModel
 import com.example.aplikasipembelajarantekniksipil.view.view_interface.QuizView
 
@@ -22,7 +23,6 @@ class QuizPresenter(private var view: QuizView){
                     cursor.getString(cursor.getColumnIndex("type")),
                     cursor.getString(cursor.getColumnIndex("last_answer")),
                     cursor.getString(cursor.getColumnIndex("image_path"))
-
                 )
                 quizList.add(data)
                 cursor.moveToNext()
@@ -38,6 +38,51 @@ class QuizPresenter(private var view: QuizView){
         cursor.close()
         view.showQuiz(quizList)
 
+        database.closeDatabase()
+    }
+
+    fun setOption(database: DatabaseAccess, quizId: Int?){
+        database.openDatabase()
+        val cursor = database.getOption(quizId)
+        val optionList: ArrayList<OptionModel> = arrayListOf()
+        cursor.moveToFirst()
+
+        while (!cursor.isAfterLast){
+            try {
+                val data = OptionModel(
+                    cursor.getInt(cursor.getColumnIndex("option_id")),
+                    cursor.getInt(cursor.getColumnIndex("quiz_id")),
+                    cursor.getString(cursor.getColumnIndex("description")),
+                    cursor.getInt(cursor.getColumnIndex("point"))
+                )
+                optionList.add(data)
+                cursor.moveToNext()
+            }catch (e: Exception){
+                Log.d(">>>>>QuizPresenter",e.message)
+            }
+
+            Log.d(">>>>>QuizPresenter","success transfer data to temp for "+cursor.position.toString()+" index")
+
+        }
+        Log.d(">>>>PresenterCursorData",cursor.toString())
+        Log.d(">>>>QuizPresenter",optionList.toString())
+        cursor.close()
+        view.showOption(optionList)
+
+        database.closeDatabase()
+    }
+
+    fun lastPointUpdate(database: DatabaseAccess,knowledgeId: Int?,lastPoint: Int){
+        database.openDatabase()
+        val cursor = database.setLastPoint(knowledgeId, lastPoint.toString())
+        Log.d(">>>>>QuizPresenter", "last point $cursor")
+        database.closeDatabase()
+    }
+
+    fun lastAnswerUpdate(database: DatabaseAccess, quizId: Int?, lastAnswer: String){
+        database.openDatabase()
+        val cursor = database.setLastAnswer(quizId,lastAnswer)
+        Log.d(">>>>>QuizPresenter", "last answer $cursor")
         database.closeDatabase()
     }
 
