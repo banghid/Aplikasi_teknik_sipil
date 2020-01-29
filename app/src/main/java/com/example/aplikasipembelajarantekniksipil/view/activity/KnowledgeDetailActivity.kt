@@ -26,6 +26,8 @@ class KnowledgeDetailActivity : AppCompatActivity() {
             Log.d(">>>>>KnowledgeDetail",e.message)
         }
 
+        wv_knowledge_detail.settings.builtInZoomControls = true
+
     }
 
 }

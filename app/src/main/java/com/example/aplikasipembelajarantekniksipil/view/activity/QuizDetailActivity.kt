@@ -39,8 +39,9 @@ class QuizDetailActivity : AppCompatActivity(),QuizView {
                     ln_essay.visibility = View.GONE
                     ln_fill_answer.visibility = View.GONE
                     question_tv.text = quizList[currentIndex].quizQuestion
-                    if (quizList[currentIndex].quizImagePath != "kosong"){
-                        quiz_image.setImageResource(resources.getIdentifier(quizList[currentIndex].quizImagePath,"drawable",packageName))
+                    if (quizList[currentIndex].quizImagePath != "no image"){
+                        quiz_image.setImageBitmap(getBitmapFromAsset(quizList[currentIndex].quizImagePath))
+                        quiz_image.visibility = View.VISIBLE
                     }else quiz_image.visibility = View.GONE
                     quizPresenter.setOption(databaseAccess,quizList[currentIndex].quizId)
                     answer_textview1.text = optionList[0].optionDescription
@@ -98,7 +99,10 @@ class QuizDetailActivity : AppCompatActivity(),QuizView {
                     ln_answer.visibility = View.GONE
                     ln_essay.visibility = View.VISIBLE
                     question_tv.text = quizList[currentIndex].quizQuestion
-                    quiz_image.visibility = View.GONE
+                    if (quizList[currentIndex].quizImagePath != "no image"){
+                        quiz_image.setImageBitmap(getBitmapFromAsset(quizList[currentIndex].quizImagePath))
+                        quiz_image.visibility = View.VISIBLE
+                    }else quiz_image.visibility = View.GONE
                     quizPresenter.setOption(databaseAccess,quizList[currentIndex].quizId)
 
                     next_quiz_button.setOnClickListener(object :View.OnClickListener {
@@ -166,6 +170,7 @@ class QuizDetailActivity : AppCompatActivity(),QuizView {
                     question_tv.text = quizList[currentIndex].quizQuestion
                     if (quizList[currentIndex].quizImagePath != "no image"){
                         quiz_image.setImageBitmap(getBitmapFromAsset(quizList[currentIndex].quizImagePath))
+                        quiz_image.visibility = View.VISIBLE
                     }else quiz_image.visibility = View.GONE
                     quizPresenter.setOption(databaseAccess,quizList[currentIndex].quizId)
                     answer_textview1.text = optionList[0].optionDescription
@@ -220,6 +225,7 @@ class QuizDetailActivity : AppCompatActivity(),QuizView {
                     question_tv.text = quizList[currentIndex].quizQuestion
                     if (quizList[currentIndex].quizImagePath != "no image"){
                         quiz_image.setImageBitmap(getBitmapFromAsset(quizList[currentIndex].quizImagePath))
+                        quiz_image.visibility = View.VISIBLE
                     }else quiz_image.visibility = View.GONE
                     quizPresenter.setOption(databaseAccess,quizList[currentIndex].quizId)
 

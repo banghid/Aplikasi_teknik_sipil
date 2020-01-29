@@ -24,15 +24,15 @@ class QuizDashboardActivity : AppCompatActivity(),QuizView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_dashboard)
 
-        val knowledgesData: KnowledgeModel = intent?.extras!!.getParcelable("KNOWLEDGE_DATA")
+        val knowledgeData: KnowledgeModel = intent?.extras!!.getParcelable("KNOWLEDGE_DATA")
         val databaseAccess: DatabaseAccess = DatabaseAccess.getInstance(this)
         quizDashboardAdapter = QuizDashboardAdapter(this,quizesData)
         quizPresenter = QuizPresenter(this)
-        quizPresenter.setQuizes(databaseAccess,knowledgesData.knowledgeId)
+        quizPresenter.setQuizes(databaseAccess,knowledgeData.knowledgeId)
 
-        if(knowledgesData.knowledgeHTML == "kosong"){
+        if(knowledgeData.knowledgeHTML == "kosong"){
             last_score_tv.text = "0"
-        }else last_score_tv.text = knowledgesData.knowledgeHTML
+        }else last_score_tv.text = knowledgeData.knowledgeHTML
 
         rv_dashboard_answer.layoutManager = LinearLayoutManager(this)
         rv_dashboard_answer.setHasFixedSize(true)
