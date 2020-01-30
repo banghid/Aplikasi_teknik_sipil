@@ -12,8 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.activity.QuizDetailActivity"
+            android:name=".view.activity.QuizResultActivity"
             android:theme="@style/SplashTheme"></activity>
+        <activity
+            android:name=".view.activity.QuizDetailActivity"
+            android:theme="@style/SplashTheme" />
         <activity
             android:name=".view.activity.QuizDashboardActivity"
             android:parentActivityName=".view.activity.KnowledgeFlowActivity" />

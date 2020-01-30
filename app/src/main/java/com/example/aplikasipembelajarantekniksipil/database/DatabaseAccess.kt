@@ -52,13 +52,15 @@ class DatabaseAccess{
         val contentValues = ContentValues()
         contentValues.put("knowledge_html",lastPoint)
         database.update("knowledge_table",contentValues,"knowledge_id = $knowledgeId", null)
-//        return database.rawQuery("UPDATE knowledge_table SET knowledge_html = $lastPoint WHERE knowledge_id = $knowledgeId", null)
     }
 
     fun setLastAnswer(quizId: Int?, lastAnswer: String){
         val contentValues = ContentValues()
         contentValues.put("last_answer", lastAnswer)
         database.update("quiz_table",contentValues,"quiz_id = $quizId",null)
-//        return database.rawQuery("UPDATE quiz_table SET last_answer = '$lastAnswer' WHERE quiz_id = $quizId", null)
+    }
+
+    fun getLastPoint(knowledgeId: Int?):Cursor{
+        return database.rawQuery("SELECT knowledge_html FROM knowledge_table WHERE knowledge_id = $knowledgeId", null)
     }
 }

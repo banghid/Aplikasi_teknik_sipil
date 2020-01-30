@@ -27,7 +27,7 @@ class QuizDetailActivity : AppCompatActivity(),QuizView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_detail)
 
-        val quizList: ArrayList<QuizModel> = intent?.extras!!.getParcelableArrayList("QUIZ_DATA")
+        val quizList: ArrayList<QuizModel> = intent?.extras!!.getParcelableArrayList("QUIZ_DATA")!!
         var currentIndex = intent?.extras!!.getInt("QUIZ_INDEX")
         var currentPoint = intent?.extras!!.getInt("CURRENT_POINT")
         quizPresenter = QuizPresenter(this)
@@ -36,18 +36,23 @@ class QuizDetailActivity : AppCompatActivity(),QuizView {
         if (currentIndex < quizList.size-1){
             when(quizList[currentIndex].quizType){
                 "multiple" -> {
-                    ln_essay.visibility = View.GONE
-                    ln_fill_answer.visibility = View.GONE
-                    question_tv.text = quizList[currentIndex].quizQuestion
-                    if (quizList[currentIndex].quizImagePath != "no image"){
+                    try {
+                        ln_essay.visibility = View.GONE
+                        ln_fill_answer.visibility = View.GONE
+                        question_tv.text = quizList[currentIndex].quizQuestion
+                        if (quizList[currentIndex].quizImagePath != "no image"){
                         quiz_image.setImageBitmap(getBitmapFromAsset(quizList[currentIndex].quizImagePath))
                         quiz_image.visibility = View.VISIBLE
-                    }else quiz_image.visibility = View.GONE
-                    quizPresenter.setOption(databaseAccess,quizList[currentIndex].quizId)
-                    answer_textview1.text = optionList[0].optionDescription
-                    answer_textview2.text = optionList[1].optionDescription
-                    answer_textview3.text = optionList[2].optionDescription
-                    ln_answer.visibility = View.VISIBLE
+                        }else quiz_image.visibility = View.GONE
+                        quizPresenter.setOption(databaseAccess,quizList[currentIndex].quizId)
+                        answer_textview1.text = optionList[0].optionDescription
+                        answer_textview2.text = optionList[1].optionDescription
+                        answer_textview3.text = optionList[2].optionDescription
+                        ln_answer.visibility = View.VISIBLE
+                    }catch (e: Exception){
+                        Log.d(">>>>>QuizDetail","Failed get option '"+e.message+"'")
+                    }
+
 
                     option_card1.setOnClickListener(object: View.OnClickListener {
                         override fun onClick(v: View?) {
@@ -213,6 +218,9 @@ class QuizDetailActivity : AppCompatActivity(),QuizView {
                             currentPoint += selectedOption.optionPoint
                             quizPresenter.lastAnswerUpdate(databaseAccess,quizList[currentIndex].quizId,selectedOption.optionDescription)
                             quizPresenter.lastPointUpdate(databaseAccess,quizList[currentIndex].knowledgeId,currentPoint)
+                            val quizResultIntent = Intent(applicationContext,QuizResultActivity::class.java)
+                            quizResultIntent.putExtra("POINT_RESULT", currentPoint)
+                            startActivity(quizResultIntent)
                             finish()
                         }
 
@@ -236,6 +244,9 @@ class QuizDetailActivity : AppCompatActivity(),QuizView {
                             }
                             quizPresenter.lastAnswerUpdate(databaseAccess,quizList[currentIndex].quizId,essay_edit_text.text.toString())
                             quizPresenter.lastPointUpdate(databaseAccess,quizList[currentIndex].knowledgeId,currentPoint)
+                            val quizResultIntent = Intent(applicationContext,QuizResultActivity::class.java)
+                            quizResultIntent.putExtra("POINT_RESULT", currentPoint)
+                            startActivity(quizResultIntent)
                             finish()
                         }
                     })
@@ -277,7 +288,9 @@ class QuizDetailActivity : AppCompatActivity(),QuizView {
                             val lastAnswer = fill_et_1.text.toString() + ", " + fill_et_2.text.toString() + ", " + fill_et_3.text.toString()
                             quizPresenter.lastAnswerUpdate(databaseAccess,quizList[currentIndex].quizId,lastAnswer)
                             quizPresenter.lastPointUpdate(databaseAccess,quizList[currentIndex].knowledgeId,currentPoint)
-                            Log.d(">>>>>QuizDetail","Sampe sini")
+                            val quizResultIntent = Intent(applicationContext,QuizResultActivity::class.java)
+                            quizResultIntent.putExtra("POINT_RESULT", currentPoint)
+                            startActivity(quizResultIntent)
                             finish()
                         }
 

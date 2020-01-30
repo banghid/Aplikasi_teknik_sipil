@@ -74,16 +74,22 @@ class QuizPresenter(private var view: QuizView){
 
     fun lastPointUpdate(database: DatabaseAccess,knowledgeId: Int?,lastPoint: Int){
         database.openDatabase()
-        val cursor = database.setLastPoint(knowledgeId, lastPoint.toString())
-        Log.d(">>>>>QuizPresenter", "last point $cursor")
+        database.setLastPoint(knowledgeId, lastPoint.toString())
+
         database.closeDatabase()
     }
 
     fun lastAnswerUpdate(database: DatabaseAccess, quizId: Int?, lastAnswer: String){
         database.openDatabase()
-        val cursor = database.setLastAnswer(quizId,lastAnswer)
-        Log.d(">>>>>QuizPresenter", "last answer $cursor")
+        database.setLastAnswer(quizId,lastAnswer)
         database.closeDatabase()
+    }
+
+    fun getLastPoint(database: DatabaseAccess,knowledgeId: Int?):String{
+        database.openDatabase()
+        val cursor = database.getLastPoint(knowledgeId)
+        cursor.moveToFirst()
+        return cursor.getString(cursor.getColumnIndex("knowledge_html"))
     }
 
 }
