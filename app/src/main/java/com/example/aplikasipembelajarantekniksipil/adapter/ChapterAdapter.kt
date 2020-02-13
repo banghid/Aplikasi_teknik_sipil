@@ -2,7 +2,7 @@ package com.example.aplikasipembelajarantekniksipil.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,8 +34,8 @@ class ChapterAdapter(private var context: Context,private var chapterList: Array
 
 }
 
-class ChapterHolder(view: View):RecyclerView.ViewHolder(view){
-    private var chapterImage = view.chapter_image
+class ChapterHolder(view: View): RecyclerView.ViewHolder(view){
+//    private var chapterImage = view.chapter_image
     private var chapterTitle = view.chapter_title
     private var chapterCaption = view.chapter_caption
     private var chapterDescription = view.chapter_description
@@ -43,7 +43,7 @@ class ChapterHolder(view: View):RecyclerView.ViewHolder(view){
     private var chapterItem = view.chapter_item
 
     fun bindChapter(context: Context, chapterData: ChapterModel){
-        chapterImage.setImageBitmap(chapterData.chapterImage)
+//        chapterImage.setImageBitmap(chapterData.chapterImage)
         chapterTitle.text = chapterData.chapterTitle
         chapterCaption.text = chapterData.chapterCaption
         chapterDescription.text = chapterData.chapterDescription

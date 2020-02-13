@@ -1,8 +1,8 @@
 package com.example.aplikasipembelajarantekniksipil.view.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import com.example.aplikasipembelajarantekniksipil.R
 import com.example.aplikasipembelajarantekniksipil.adapter.KnowledgeAdapter
@@ -53,7 +53,8 @@ class KnowledgeFlowActivity : AppCompatActivity(),KnowledgeView {
             Log.d(">>>>>KnowledgeFlow","success gathering data")
         }
 
-        rv_knowledge_flow.layoutManager = LinearLayoutManager(this)
+        rv_knowledge_flow.layoutManager =
+            LinearLayoutManager(this)
         rv_knowledge_flow.setHasFixedSize(true)
         rv_knowledge_flow.adapter = knowledgeAdapter
 
@@ -68,10 +69,6 @@ class KnowledgeFlowActivity : AppCompatActivity(),KnowledgeView {
         knowledgeAdapter.notifyDataSetChanged()
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putParcelableArrayList("data",knowledgeAdapter.getList())
-        super.onSaveInstanceState(outState)
-    }
 
     override fun onDestroy() {
         super.onDestroy()

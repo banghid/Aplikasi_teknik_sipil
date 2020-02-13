@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@+id/dashboardScreen">
+    <fragment
+        android:id="@+id/dashboardScreen"
+        android:name="com.example.aplikasipembelajarantekniksipil.view.fragment.DashboardFragment"
+        android:label="Halaman Utama"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/reportScreen"
+        android:name="com.example.aplikasipembelajarantekniksipil.view.fragment.ReportFragment"
+        android:label="Rapor"
+        tools:layout="@layout/fragment_report" />
+
+    <fragment
+        android:id="@+id/aboutAppScreen"
+        android:name="com.example.aplikasipembelajarantekniksipil.view.fragment.AboutAppFragment"
+        tools:layout="@layout/fragment_about_app"
+        android:label="Tentang Aplikasi"/>
+</navigation>

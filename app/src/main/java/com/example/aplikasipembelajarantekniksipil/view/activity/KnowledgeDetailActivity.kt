@@ -1,7 +1,7 @@
 package com.example.aplikasipembelajarantekniksipil.view.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import com.example.aplikasipembelajarantekniksipil.R
 import com.example.aplikasipembelajarantekniksipil.model.KnowledgeModel

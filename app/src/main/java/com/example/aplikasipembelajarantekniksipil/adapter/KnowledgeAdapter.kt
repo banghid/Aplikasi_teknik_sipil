@@ -2,7 +2,7 @@ package com.example.aplikasipembelajarantekniksipil.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +15,8 @@ import com.github.vipulasri.timelineview.TimelineView
 import kotlinx.android.synthetic.main.knowledge_item.view.*
 
 
-class KnowledgeAdapter(private var context: Context, private var knowledgeList: ArrayList<KnowledgeModel>,private var userStageList: List<UserStageModel>):RecyclerView.Adapter<KnowledgeHolder>(){
+class KnowledgeAdapter(private var context: Context, private var knowledgeList: ArrayList<KnowledgeModel>,private var userStageList: List<UserStageModel>):
+    RecyclerView.Adapter<KnowledgeHolder>(){
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): KnowledgeHolder {
         return KnowledgeHolder(
             LayoutInflater.from(p0.context).inflate(
@@ -43,7 +44,8 @@ class KnowledgeAdapter(private var context: Context, private var knowledgeList: 
 
 }
 
-class KnowledgeHolder(view: View, viewType:Int):RecyclerView.ViewHolder(view){
+class KnowledgeHolder(view: View, viewType:Int):
+    RecyclerView.ViewHolder(view){
 
     private var knowledgeTitle = view.knowledge_title
     private var knowledgeCaption = view.knowledge_caption

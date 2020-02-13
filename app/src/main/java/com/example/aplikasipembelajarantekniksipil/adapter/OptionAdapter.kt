@@ -1,7 +1,7 @@
 package com.example.aplikasipembelajarantekniksipil.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +29,8 @@ class OptionAdapter(private var context: Context,private var optionList: ArrayLi
 
 }
 
-class OptionHolder(view: View, viewType:Int):RecyclerView.ViewHolder(view){
+class OptionHolder(view: View, viewType:Int):
+    RecyclerView.ViewHolder(view){
     private var frameButton = view.option_frame
     private var optionCard = view.option_card
     private var optionTv = view.answer_textview

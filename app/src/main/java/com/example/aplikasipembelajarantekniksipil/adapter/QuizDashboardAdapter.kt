@@ -1,7 +1,7 @@
 package com.example.aplikasipembelajarantekniksipil.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +9,8 @@ import com.example.aplikasipembelajarantekniksipil.R
 import com.example.aplikasipembelajarantekniksipil.model.QuizModel
 import kotlinx.android.synthetic.main.dashboard_answer_item.view.*
 
-class QuizDashboardAdapter(private val context: Context, private val quizList: ArrayList<QuizModel>):RecyclerView.Adapter<QuizDashboardHolder>() {
+class QuizDashboardAdapter(private val context: Context, private val quizList: ArrayList<QuizModel>):
+    RecyclerView.Adapter<QuizDashboardHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): QuizDashboardHolder {
         return QuizDashboardHolder(
             LayoutInflater.from(p0.context).inflate(
@@ -28,7 +29,8 @@ class QuizDashboardAdapter(private val context: Context, private val quizList: A
     }
 }
 
-class QuizDashboardHolder(view: View, viewType:Int):RecyclerView.ViewHolder(view){
+class QuizDashboardHolder(view: View, viewType:Int):
+    RecyclerView.ViewHolder(view){
     private var numberTextview = view.number_textview
     private var answerTextview = view.answer_textview
 

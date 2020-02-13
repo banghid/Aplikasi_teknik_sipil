@@ -2,8 +2,8 @@ package com.example.aplikasipembelajarantekniksipil.view.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import com.example.aplikasipembelajarantekniksipil.R
 import com.example.aplikasipembelajarantekniksipil.adapter.QuizDashboardAdapter
@@ -36,7 +36,8 @@ class QuizDashboardActivity : AppCompatActivity(),QuizView {
             last_score_tv.text = "0"
         }else last_score_tv.text = lastPoint
 
-        rv_dashboard_answer.layoutManager = LinearLayoutManager(this)
+        rv_dashboard_answer.layoutManager =
+            LinearLayoutManager(this)
         rv_dashboard_answer.setHasFixedSize(true)
         rv_dashboard_answer.adapter = quizDashboardAdapter
 
