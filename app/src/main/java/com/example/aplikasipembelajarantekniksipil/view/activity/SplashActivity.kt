@@ -3,14 +3,16 @@ package com.example.aplikasipembelajarantekniksipil.view.activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import androidx.viewpager.widget.ViewPager
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Html
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
 import com.example.aplikasipembelajarantekniksipil.R
 import com.example.aplikasipembelajarantekniksipil.adapter.SplashAdapter
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity() {
@@ -18,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
     var mDots: ArrayList<TextView> = arrayListOf()
     lateinit var slidePager: ViewPager
     lateinit var dotsLayout: LinearLayout
-    var currentPage:Int = 0
+    var currentPage: Int = 0
     private val SPLASH_TIME_OUT_1 = 4000
     private val SPLASH_TIME_OUT_2 = 8000
 
@@ -33,7 +35,7 @@ class SplashActivity : AppCompatActivity() {
 
         addDotsIndicator(0)
 
-        slidePager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+        slidePager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(p0: Int) {
 
             }
@@ -46,12 +48,12 @@ class SplashActivity : AppCompatActivity() {
                 addDotsIndicator(p0)
                 currentPage = p0
 
-                if (p0 == 0){
+                if (p0 == 0) {
                     prevButton.isEnabled = false
                     nextButton.isEnabled = true
                     nextButton.text = "Lanjut"
                     prevButton.visibility = View.GONE
-                }else{
+                } else {
                     prevButton.isEnabled = true
                     prevButton.visibility = View.VISIBLE
                     nextButton.text = "Selesai"
@@ -60,44 +62,35 @@ class SplashActivity : AppCompatActivity() {
 
         })
 
-        nextButton.setOnClickListener(object :View.OnClickListener {
-            override fun onClick(v: View?) {
-                if (nextButton.text == "Lanjut"){
-                    slidePager.currentItem = currentPage + 1
-                }else{
-                    toMainActivity()
-                }
-            }
-        })
-
-        prevButton.setOnClickListener(object: View.OnClickListener {
-            override fun onClick(v: View?) {
-                slidePager.currentItem = currentPage - 1
-            }
-
-        })
-
-        Handler().postDelayed(object : Runnable{
-            override fun run() {
-                if (currentPage<1){
-                    slidePager.currentItem = currentPage + 1
-                }else toMainActivity()
-            }
-        },SPLASH_TIME_OUT_1.toLong()
-        )
-
-        Handler().postDelayed(object : Runnable{
-            override fun run() {
+        nextButton.setOnClickListener {
+            if (nextButton.text == "Lanjut") {
+                slidePager.currentItem = currentPage + 1
+            } else {
                 toMainActivity()
             }
-        },SPLASH_TIME_OUT_2.toLong()
+        }
+
+        prevButton.setOnClickListener { slidePager.currentItem = currentPage - 1 }
+
+        Handler().postDelayed(
+            object : Runnable {
+                override fun run() {
+                    if (currentPage < 1) {
+                        slidePager.currentItem = currentPage + 1
+                    } else toMainActivity()
+                }
+            }, SPLASH_TIME_OUT_1.toLong()
+        )
+
+        Handler().postDelayed(
+            { toMainActivity() }, SPLASH_TIME_OUT_2.toLong()
         )
     }
 
-    fun addDotsIndicator(postion:Int){
+    fun addDotsIndicator(postion: Int) {
         var i = 0
         dotsLayout.removeAllViews()
-        while (i > 2){
+        while (i > 2) {
             mDots[i] = TextView(this)
             mDots[i].text = Html.fromHtml("&#8226")
             mDots[i].textSize = 35f
@@ -107,15 +100,22 @@ class SplashActivity : AppCompatActivity() {
             i++
         }
 
-        if (mDots.size > 0){
+        if (mDots.size > 0) {
             mDots[postion].setTextColor(resources.getColor(R.color.colorWhite))
         }
     }
 
-    fun toMainActivity(){
-        val intentMainActivity = Intent(applicationContext,NavdrawActivity::class.java)
-        startActivity(intentMainActivity)
-        finish()
+    fun toMainActivity() {
+        var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+        if (mAuth.currentUser != null){
+            val intentNavdraw = Intent(this,NavdrawActivity::class.java)
+            startActivity(intentNavdraw)
+            finish()
+        }else{
+            val intentMainActivity = Intent(applicationContext, LoginActivity::class.java)
+            startActivity(intentMainActivity)
+            finish()
+        }
     }
 
 

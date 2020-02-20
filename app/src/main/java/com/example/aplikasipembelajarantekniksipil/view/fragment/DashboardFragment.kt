@@ -1,8 +1,7 @@
 package com.example.aplikasipembelajarantekniksipil.view.fragment
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +14,11 @@ import com.example.aplikasipembelajarantekniksipil.database.DatabaseAccess
 import com.example.aplikasipembelajarantekniksipil.model.ChapterModel
 import com.example.aplikasipembelajarantekniksipil.presenter.ChapterPresenter
 import com.example.aplikasipembelajarantekniksipil.view.view_interface.ChapterView
-import kotlinx.android.synthetic.main.activity_main.*
-
+import kotlinx.android.synthetic.main.activity_quiz_detail.*
+import kotlinx.android.synthetic.main.fragment_dashboard.*
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
+import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectanglePromptBackground
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 
 
 class DashboardFragment : Fragment(),ChapterView {
@@ -48,9 +50,13 @@ class DashboardFragment : Fragment(),ChapterView {
     }
 
     override fun showChapter(chapters: List<ChapterModel>) {
+        this.chaptersData.clear()
         this.chaptersData.addAll(chapters)
         chapterAdapter.notifyDataSetChanged()
     }
+
+
+
 
 
 }
