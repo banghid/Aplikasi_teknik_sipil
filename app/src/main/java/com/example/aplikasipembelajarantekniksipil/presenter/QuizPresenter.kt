@@ -92,4 +92,11 @@ class QuizPresenter(private var view: QuizView){
         return cursor.getString(cursor.getColumnIndex("knowledge_html"))
     }
 
+    fun getKnowledge(knowledgeId: Int, database: DatabaseAccess):Int{
+        database.openDatabase()
+        val cursor = database.getWhere("knowledge_table", knowledgeId, "knowledge_id")
+        cursor.moveToFirst()
+        return cursor.getInt(cursor.getColumnIndex("chapter_id"))
+    }
+
 }

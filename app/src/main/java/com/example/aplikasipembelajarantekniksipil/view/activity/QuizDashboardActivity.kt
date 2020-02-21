@@ -42,6 +42,7 @@ class QuizDashboardActivity : AppCompatActivity(), QuizView {
         try {
             dbReference.child("save_state")
                 .child(userAuth.currentUser?.uid.toString())
+                .child(knowledgeData.chapterId.toString())
                 .child(knowledgeData.knowledgeId.toString())
                 .child("score")
                 .addValueEventListener(object : ValueEventListener {

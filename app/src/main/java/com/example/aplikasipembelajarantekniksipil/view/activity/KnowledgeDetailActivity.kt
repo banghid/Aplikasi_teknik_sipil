@@ -1,9 +1,9 @@
 package com.example.aplikasipembelajarantekniksipil.view.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.aplikasipembelajarantekniksipil.R
 import com.example.aplikasipembelajarantekniksipil.model.KnowledgeModel
 import com.example.aplikasipembelajarantekniksipil.model.LearnStateData
@@ -40,6 +40,7 @@ class KnowledgeDetailActivity : AppCompatActivity() {
                 "kosong"
                 )
             databaseReference.child(currentUser?.uid.toString())
+                .child(knowledgeData.chapterId.toString())
                 .child(stateValue.knowledgeId.toString())
                 .child("score")
                 .setValue(stateValue.score)

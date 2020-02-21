@@ -4,10 +4,10 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.aplikasipembelajarantekniksipil.R
 import com.example.aplikasipembelajarantekniksipil.database.DatabaseAccess
 import com.example.aplikasipembelajarantekniksipil.model.OptionModel
@@ -28,6 +28,7 @@ class QuizDetailActivity : AppCompatActivity(),QuizView {
     private lateinit var quizPresenter: QuizPresenter
     private lateinit var selectedOption:OptionModel
     private var hasSelect = false
+    private var chapterId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +42,7 @@ class QuizDetailActivity : AppCompatActivity(),QuizView {
         var currentPoint = intent?.extras!!.getInt("CURRENT_POINT")
         quizPresenter = QuizPresenter(this)
         val databaseAccess: DatabaseAccess = DatabaseAccess.getInstance(this)
+        chapterId = quizPresenter.getKnowledge(quizList[currentIndex].knowledgeId, databaseAccess)
 
         if (currentIndex < quizList.size-1){
             when(quizList[currentIndex].quizType){
@@ -311,6 +313,7 @@ class QuizDetailActivity : AppCompatActivity(),QuizView {
         val databaseReference = fDatabase.reference
         databaseReference.child("save_state")
             .child(mAuth.currentUser?.uid.toString())
+            .child(chapterId.toString())
             .child(knowledgeId.toString())
             .child("score")
             .setValue(currentPoint.toString())

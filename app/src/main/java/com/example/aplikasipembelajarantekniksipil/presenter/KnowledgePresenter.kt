@@ -56,4 +56,74 @@ class KnowledgePresenter(private var view:KnowledgeView){
             Log.d(">>>>KnowledgePresenter", "fail to get user stage "+e.message)
         }
     }
+
+    fun getKnowledgeWhere(id:Int, databaseAccess: DatabaseAccess){
+        databaseAccess.openDatabase()
+        val cursor = databaseAccess.getWhere("knowledge_table", id, "chapter_id")
+        val knowledgeList: ArrayList<KnowledgeModel> = arrayListOf()
+        Log.d(">>>>>KnowledgePresenter","success instance an arraylist knowledge model")
+        cursor.moveToFirst()
+        Log.d(">>>>>KnowledgePresenter","success moving a cursor to the first index")
+        while (!cursor.isAfterLast){
+            try {
+                val data = KnowledgeModel(
+                    cursor.getInt(cursor.getColumnIndex("knowledge_id")),
+                    cursor.getInt(cursor.getColumnIndex("chapter_id")),
+                    cursor.getString(cursor.getColumnIndex("knowledge_title")),
+                    cursor.getString(cursor.getColumnIndex("knowledge_caption")),
+                    cursor.getString(cursor.getColumnIndex("knowledge_quiz")),
+                    cursor.getString(cursor.getColumnIndex("knowledge_html"))
+
+                )
+                knowledgeList.add(data)
+                cursor.moveToNext()
+            }catch (e: Exception){
+                Log.d(">>>>>KnowledgePresenter",e.message)
+            }
+
+            Log.d(">>>>>KnowledgePresenter","success transfer data to temp for "+cursor.position.toString()+" index")
+
+        }
+        Log.d(">>>>PresenterCursorData",cursor.toString())
+        Log.d(">>>>KnowledgeData",knowledgeList.toString())
+        cursor.close()
+        view.showKnowledge(knowledgeList)
+        databaseAccess.closeDatabase()
+
+    }
+
+    fun getAll(databaseAccess: DatabaseAccess){
+        databaseAccess.openDatabase()
+        val cursor = databaseAccess.getAllKnowledge()
+        val knowledgeList: ArrayList<KnowledgeModel> = arrayListOf()
+        Log.d(">>>>>KnowledgePresenter","success instance an arraylist knowledge model")
+        cursor.moveToFirst()
+        Log.d(">>>>>KnowledgePresenter","success moving a cursor to the first index")
+        while (!cursor.isAfterLast){
+            try {
+                val data = KnowledgeModel(
+                    cursor.getInt(cursor.getColumnIndex("knowledge_id")),
+                    cursor.getInt(cursor.getColumnIndex("chapter_id")),
+                    cursor.getString(cursor.getColumnIndex("knowledge_title")),
+                    cursor.getString(cursor.getColumnIndex("knowledge_caption")),
+                    cursor.getString(cursor.getColumnIndex("knowledge_quiz")),
+                    cursor.getString(cursor.getColumnIndex("knowledge_html"))
+
+                )
+                knowledgeList.add(data)
+                cursor.moveToNext()
+            }catch (e: Exception){
+                Log.d(">>>>>KnowledgePresenter",e.message.toString())
+            }
+
+            Log.d(">>>>>KnowledgePresenter","success transfer data to temp for "+cursor.position.toString()+" index")
+
+        }
+        Log.d(">>>>PresenterCursorData",cursor.toString())
+        Log.d(">>>>KnowledgeData",knowledgeList.toString())
+        cursor.close()
+        view.showKnowledge(knowledgeList)
+        databaseAccess.closeDatabase()
+
+    }
 }
