@@ -21,4 +21,10 @@
         android:name="com.example.aplikasipembelajarantekniksipil.view.fragment.AboutAppFragment"
         tools:layout="@layout/fragment_about_app"
         android:label="Tentang Aplikasi"/>
+
+    <fragment
+        android:id="@+id/profileScreen"
+        android:name="com.example.aplikasipembelajarantekniksipil.view.fragment.ProfileFragment"
+        android:label="Info Pengguna"
+        tools:layout="@layout/fragment_profile"/>
 </navigation>

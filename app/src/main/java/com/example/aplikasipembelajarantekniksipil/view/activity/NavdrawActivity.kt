@@ -92,6 +92,11 @@ class NavdrawActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 }
             }
             R.id.profile_menu -> {
+                if (isValidDestination(R.id.profile_menu)) {
+                    Navigation.findNavController(this, R.id.nav_host_fragment).navigate(
+                        R.id.profileScreen
+                    )
+                }
             }
             R.id.logout_menu -> {
                 mAuth.signOut()
