@@ -49,6 +49,10 @@ class ReportFragment : Fragment(), ChapterView, KnowledgeView {
     private var totalQuizKayu = 0
     private var totalQuizBeton = 0
     private var totalQuizBaja = 0
+    private var totalNilaiQuizKayu = 0
+    private var progressKayu:Float = 0f
+    private var progressBaja:Float = 0f
+    private var progressBeton:Float = 0f
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,21 +89,25 @@ class ReportFragment : Fragment(), ChapterView, KnowledgeView {
 
         knowledgePresenter.getAll(databaseAccess)
         var j = 0
-        while (j<knowledgeData.size){
-            if (knowledgeData[j].knowledgeQuiz == "yes"){
-                if (knowledgeData[j].chapterId == 1){
+        while (j < knowledgeData.size) {
+            if (knowledgeData[j].knowledgeQuiz == "yes") {
+                if (knowledgeData[j].chapterId == 1) {
                     totalQuizKayu++
                 }
-                if (knowledgeData[j].chapterId == 1){
+                if (knowledgeData[j].chapterId == 1) {
                     totalQuizBeton++
                 }
-                if (knowledgeData[j].chapterId == 1){
+                if (knowledgeData[j].chapterId == 1) {
                     totalQuizBaja++
                 }
-                totalQuizKeseluruhan++
             }
             j++
         }
+
+        Log.d(
+            ">>>>>ReportFragment",
+            "total_quiz: $totalQuizKeseluruhan , total_quiz_kayu: $totalQuizKayu"
+        )
 
         databaseReference.child("save_state")
             .child(mAuth.currentUser?.uid.toString())
@@ -111,35 +119,55 @@ class ReportFragment : Fragment(), ChapterView, KnowledgeView {
 
                 override fun onDataChange(p0: DataSnapshot) {
                     for (noteDataSnapshot in p0.children) {
-                        val request:StageModel? = noteDataSnapshot.getValue(StageModel::class.java)
+                        val request: StageModel? = noteDataSnapshot.getValue(StageModel::class.java)
 
                         kayuProgress.add(request!!)
                         totalKayuProggress = kayuProgress.size
-                        totalProgress = totalBajaProggress + totalKayuProggress + totalBetonProggress
+                        totalProgress =
+                            totalBajaProggress + totalKayuProggress + totalBetonProggress
 
                     }
 
-                    donutProgress.progress = (totalProgress.toFloat()/totalKnowledge.toFloat()) * 100
-                    val progressBaja = (totalKayuProggress.toFloat()/size[0].toFloat()) * 100
-                    progress_total_kayu.progress = progressBaja.toInt()
+                    donutProgress.progress =
+                        (totalProgress.toFloat() / totalKnowledge.toFloat()) * 100
+                    progressKayu = (totalKayuProggress.toFloat() / size[0].toFloat()) * 100
+                    progress_total_kayu.progress = progressKayu.toInt()
 
                     var i = 0
                     var progressQuiz = 0
-                    var totalNilaiQuiz = 0
-                    while(i<kayuProgress.size){
+
+                    while (i < kayuProgress.size) {
                         Log.d(">>>>>ReportFragment", kayuProgress[i].score)
-                        if (kayuProgress[i].score != "kosong"){
+                        if (kayuProgress[i].score != "kosong") {
                             progressQuiz++
-                            totalNilaiQuiz += kayuProgress[i].score.toInt()
+                            totalNilaiQuizKayu += kayuProgress[i].score.toInt()
                             totalNilaiKeseluruhan += kayuProgress[i].score.toInt()
+                            totalQuizKeseluruhan++
                         }
                         i++
                     }
+                    Log.d(
+                        ">>>>>ReportFragment",
+                        "progressQuiz: " + progressQuiz +
+                                ", totalNilaiQuiz: " + totalNilaiQuizKayu +
+                                ", totalNilaiKeseluruhan:" + totalNilaiKeseluruhan
+                    )
 
-                    val rataRata = (totalNilaiQuiz.toFloat()/totalQuizKayu.toFloat())*100
-                    val rataKeseluruhan = (totalNilaiKeseluruhan.toFloat()/totalQuizKeseluruhan.toFloat())*100
+                    val rataRata = (totalNilaiQuizKayu.toFloat() / progressQuiz.toFloat())
+                    Log.d(
+                        ">>>>>ReportFragment",
+                        "rata-rata kayu: $rataRata"
+                    )
+                    val rataKeseluruhan =
+                        (totalNilaiKeseluruhan.toFloat() / totalQuizKeseluruhan.toFloat())
+                    Log.d(
+                        ">>>>>ReportFragment",
+                        "rata-rata keseluruhan: $rataKeseluruhan"
+                    )
+                    val progressPercentage = (progressQuiz.toFloat()/totalQuizKayu.toFloat())*100
+                    progress_quiz_kayu.progress = progressPercentage.toInt()
                     rata_quiz_keseluruhan.progress = rataKeseluruhan.toInt()
-                    rata_quiz_kayu.progress =rataRata.toInt()
+                    rata_quiz_kayu.progress = rataRata.toInt()
                 }
 
             })
@@ -154,34 +182,40 @@ class ReportFragment : Fragment(), ChapterView, KnowledgeView {
 
                 override fun onDataChange(p0: DataSnapshot) {
                     for (noteDataSnapshot in p0.children) {
-                        val request:StageModel? = noteDataSnapshot.getValue(StageModel::class.java)
+                        val request: StageModel? = noteDataSnapshot.getValue(StageModel::class.java)
 
                         betonProgress.add(request!!)
                         totalBetonProggress = betonProgress.size
-                        totalProgress = totalBajaProggress + totalKayuProggress + totalBetonProggress
+                        totalProgress =
+                            totalBajaProggress + totalKayuProggress + totalBetonProggress
 
                     }
 
-                    donutProgress.progress = (totalProgress.toFloat()/totalKnowledge.toFloat()) * 100
-                    val progressBeton = (totalBetonProggress.toFloat()/size[1].toFloat()) * 100
+                    donutProgress.progress =
+                        (totalProgress.toFloat() / totalKnowledge.toFloat()) * 100
+                    progressBeton = (totalBetonProggress.toFloat() / size[1].toFloat()) * 100
                     progress_total_beton.progress = progressBeton.toInt()
 
                     var i = 0
                     var progressQuiz = 0
                     var totalNilaiQuiz = 0
-                    while(i<betonProgress.size){
-                        if (betonProgress[i].score != "kosong"){
+                    while (i < betonProgress.size) {
+                        if (betonProgress[i].score != "kosong") {
                             progressQuiz++
                             totalNilaiQuiz += betonProgress[i].score.toInt()
                             totalNilaiKeseluruhan += betonProgress[i].score.toInt()
+                            totalQuizKeseluruhan++
                         }
                         i++
                     }
 
-                    val rataRata = (totalNilaiQuiz.toFloat()/totalQuizKayu.toFloat())*100
-                    val rataKeseluruhan = (totalNilaiKeseluruhan.toFloat()/totalQuizKeseluruhan.toFloat())*100
+                    val rataRata = (totalNilaiQuiz.toFloat() / progressQuiz.toFloat())
+                    val rataKeseluruhan =
+                        (totalNilaiKeseluruhan.toFloat() / totalQuizKeseluruhan.toFloat())
+                    val progressPercentage = (progressQuiz.toFloat()/totalQuizBeton.toFloat())*100
+                    progress_quiz_beton.progress = progressPercentage.toInt()
                     rata_quiz_keseluruhan.progress = rataKeseluruhan.toInt()
-                    rata_quiz_beton.progress =rataRata.toInt()
+                    rata_quiz_beton.progress = rataRata.toInt()
                 }
 
             })
@@ -196,34 +230,40 @@ class ReportFragment : Fragment(), ChapterView, KnowledgeView {
 
                 override fun onDataChange(p0: DataSnapshot) {
                     for (noteDataSnapshot in p0.children) {
-                        val request:StageModel? = noteDataSnapshot.getValue(StageModel::class.java)
+                        val request: StageModel? = noteDataSnapshot.getValue(StageModel::class.java)
 
                         bajaProgress.add(request!!)
                         totalBajaProggress = bajaProgress.size
-                        totalProgress = totalBajaProggress + totalKayuProggress + totalBetonProggress
+                        totalProgress =
+                            totalBajaProggress + totalKayuProggress + totalBetonProggress
 
                     }
 
-                    donutProgress.progress = (totalProgress.toFloat()/totalKnowledge.toFloat()) * 100
-                    val progressBaja = (totalBajaProggress.toFloat()/size[2].toFloat()) * 100
+                    donutProgress.progress =
+                        (totalProgress.toFloat() / totalKnowledge.toFloat()) * 100
+                    progressBaja = (totalBajaProggress.toFloat() / size[2].toFloat()) * 100
                     progress_total_baja.progress = progressBaja.toInt()
 
                     var i = 0
                     var progressQuiz = 0
                     var totalNilaiQuiz = 0
-                    while(i<bajaProgress.size){
-                        if (bajaProgress[i].score != "kosong"){
+                    while (i < bajaProgress.size) {
+                        if (bajaProgress[i].score != "kosong") {
                             progressQuiz++
                             totalNilaiQuiz += bajaProgress[i].score.toInt()
                             totalNilaiKeseluruhan += bajaProgress[i].score.toInt()
+                            totalQuizKeseluruhan++
                         }
                         i++
                     }
 
-                    val rataRata = (totalNilaiQuiz.toFloat()/totalQuizBaja.toFloat())*100
-                    val rataKeseluruhan = (totalNilaiKeseluruhan.toFloat()/totalQuizKeseluruhan.toFloat())*100
+                    val rataRata = (totalNilaiQuiz.toFloat() / progressQuiz.toFloat())
+                    val rataKeseluruhan =
+                        (totalNilaiKeseluruhan.toFloat() / totalQuizKeseluruhan.toFloat())
+                    val progressPercentage = (progressQuiz.toFloat()/totalQuizBaja.toFloat())*100
+                    progress_quiz_baja.progress = progressPercentage.toInt()
                     rata_quiz_keseluruhan.progress = rataKeseluruhan.toInt()
-                    rata_quiz_baja.progress =rataRata.toInt()
+                    rata_quiz_baja.progress = rataRata.toInt()
                 }
 
             })
@@ -243,6 +283,4 @@ class ReportFragment : Fragment(), ChapterView, KnowledgeView {
     override fun loadUserStage(userStages: List<UserStageModel>) {
 
     }
-
-
 }

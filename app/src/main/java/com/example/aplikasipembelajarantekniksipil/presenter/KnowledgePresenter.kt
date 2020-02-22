@@ -78,10 +78,10 @@ class KnowledgePresenter(private var view:KnowledgeView){
                 knowledgeList.add(data)
                 cursor.moveToNext()
             }catch (e: Exception){
-                Log.d(">>>>>KnowledgePresenter",e.message)
+                Log.d(">>>>>KnowledgePresenter",e.message.toString())
             }
 
-            Log.d(">>>>>KnowledgePresenter","success transfer data to temp for "+cursor.position.toString()+" index")
+//            Log.d(">>>>>KnowledgePresenter","success transfer data to temp for "+cursor.position.toString()+" index")
 
         }
         Log.d(">>>>PresenterCursorData",cursor.toString())
@@ -116,7 +116,7 @@ class KnowledgePresenter(private var view:KnowledgeView){
                 Log.d(">>>>>KnowledgePresenter",e.message.toString())
             }
 
-            Log.d(">>>>>KnowledgePresenter","success transfer data to temp for "+cursor.position.toString()+" index")
+            Log.d(">>>>>KnowledgePresenter","success transfer data to KnowledgeData getAll() function")
 
         }
         Log.d(">>>>PresenterCursorData",cursor.toString())

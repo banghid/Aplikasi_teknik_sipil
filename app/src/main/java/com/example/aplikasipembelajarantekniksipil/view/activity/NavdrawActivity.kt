@@ -119,6 +119,12 @@ class NavdrawActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     override fun onSupportNavigateUp(): Boolean {
+//        return Navigation.findNavController(this, R.id.nav_host_fragment)
+//            .popBackStack(
+//                R.id.drawer_layout,
+//                true
+//            )
+        supportFragmentManager.popBackStack()
         return NavigationUI.navigateUp(
             Navigation.findNavController(this, R.id.nav_host_fragment),
             drawerLayout
