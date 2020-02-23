@@ -4,22 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.Html
-import android.view.View
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.aplikasipembelajarantekniksipil.R
 import com.example.aplikasipembelajarantekniksipil.adapter.SplashAdapter
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity() {
 
     var mDots: ArrayList<TextView> = arrayListOf()
     lateinit var slidePager: ViewPager
-    lateinit var dotsLayout: LinearLayout
     var currentPage: Int = 0
     private val SPLASH_TIME_OUT_1 = 4000
     private val SPLASH_TIME_OUT_2 = 8000
@@ -28,7 +23,6 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         slidePager = findViewById(R.id.slidePager)
-        dotsLayout = findViewById(R.id.dotsLayout)
 
         val sliderAdapter = SplashAdapter(this)
         slidePager.adapter = sliderAdapter
@@ -48,37 +42,35 @@ class SplashActivity : AppCompatActivity() {
                 addDotsIndicator(p0)
                 currentPage = p0
 
-                if (p0 == 0) {
-                    prevButton.isEnabled = false
-                    nextButton.isEnabled = true
-                    nextButton.text = "Lanjut"
-                    prevButton.visibility = View.GONE
-                } else {
-                    prevButton.isEnabled = true
-                    prevButton.visibility = View.VISIBLE
-                    nextButton.text = "Selesai"
-                }
+//                if (p0 == 0) {
+//                    prevButton.isEnabled = false
+//                    nextButton.isEnabled = true
+//                    nextButton.text = "Lanjut"
+//                    prevButton.visibility = View.GONE
+//                } else {
+//                    prevButton.isEnabled = true
+//                    prevButton.visibility = View.VISIBLE
+//                    nextButton.text = "Selesai"
+//                }
             }
 
         })
 
-        nextButton.setOnClickListener {
-            if (nextButton.text == "Lanjut") {
-                slidePager.currentItem = currentPage + 1
-            } else {
-                toMainActivity()
-            }
-        }
-
-        prevButton.setOnClickListener { slidePager.currentItem = currentPage - 1 }
+//        nextButton.setOnClickListener {
+//            if (nextButton.text == "Lanjut") {
+//                slidePager.currentItem = currentPage + 1
+//            } else {
+//                toMainActivity()
+//            }
+//        }
+//
+//        prevButton.setOnClickListener { slidePager.currentItem = currentPage - 1 }
 
         Handler().postDelayed(
-            object : Runnable {
-                override fun run() {
-                    if (currentPage < 1) {
-                        slidePager.currentItem = currentPage + 1
-                    } else toMainActivity()
-                }
+            {
+                if (currentPage < 1) {
+                    slidePager.currentItem = currentPage + 1
+                } else toMainActivity()
             }, SPLASH_TIME_OUT_1.toLong()
         )
 
@@ -89,14 +81,14 @@ class SplashActivity : AppCompatActivity() {
 
     fun addDotsIndicator(postion: Int) {
         var i = 0
-        dotsLayout.removeAllViews()
+//        dotsLayout.removeAllViews()
         while (i > 2) {
             mDots[i] = TextView(this)
             mDots[i].text = Html.fromHtml("&#8226")
             mDots[i].textSize = 35f
             mDots[i].setTextColor(resources.getColor(R.color.colorTransparentWhite))
 
-            dotsLayout.addView(mDots[i])
+//            dotsLayout.addView(mDots[i])
             i++
         }
 

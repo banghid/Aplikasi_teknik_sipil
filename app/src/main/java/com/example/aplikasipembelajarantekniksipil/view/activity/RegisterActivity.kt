@@ -2,6 +2,7 @@ package com.example.aplikasipembelajarantekniksipil.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -9,6 +10,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aplikasipembelajarantekniksipil.R
 import com.google.firebase.auth.FirebaseAuth
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
+import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectanglePromptBackground
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -26,6 +30,8 @@ class RegisterActivity : AppCompatActivity() {
         etEmail = findViewById(R.id.et_register_username)
         etPassword = findViewById(R.id.et_register_password)
         mAuth = FirebaseAuth.getInstance()
+
+        showPrompt()
 
         btnRegister.setOnClickListener {
             val email = etEmail.text.toString()
@@ -72,5 +78,41 @@ class RegisterActivity : AppCompatActivity() {
         val loginIntent = Intent(this, LoginActivity::class.java)
         startActivity(loginIntent)
         finish()
+    }
+
+    private fun showPrompt() {
+        val prefManager = PreferenceManager.getDefaultSharedPreferences(this)
+
+        if (!prefManager.getBoolean("REGISTER_TUTORIAL", false)) {
+            MaterialTapTargetPrompt.Builder(this)
+                .setTarget(R.id.rl_register_form)
+                .setPrimaryText("Form Daftar")
+                .setSecondaryText("Isi email dan password yang akan digunakan untuk mendaftar")
+                .setBackButtonDismissEnabled(true)
+                .setPromptStateChangeListener { prompt, state ->
+                    if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED ||
+                        state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED
+                    ) {
+                        val prefEditor = prefManager.edit()
+                        prefEditor.putBoolean("REGISTER_TUTORIAL", true)
+                        prefEditor.apply()
+                        showRegisterButton()
+                    }
+                }
+                .setPromptBackground(RectanglePromptBackground())
+                .setPromptFocal(RectanglePromptFocal())
+                .show()
+        }
+    }
+
+    private fun showRegisterButton() {
+        MaterialTapTargetPrompt.Builder(this)
+            .setTarget(R.id.btn_register_process)
+            .setPrimaryText("Tombol Daftar")
+            .setSecondaryText("Klik tombol daftar untuk melakukan proses daftar")
+            .setBackButtonDismissEnabled(true)
+            .setPromptBackground(RectanglePromptBackground())
+            .setPromptFocal(RectanglePromptFocal())
+            .show()
     }
 }

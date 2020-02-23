@@ -2,14 +2,17 @@ package com.example.aplikasipembelajarantekniksipil.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import com.example.aplikasipembelajarantekniksipil.R
 import com.google.firebase.auth.FirebaseAuth
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
+import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectanglePromptBackground
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 
 
 class LoginActivity : AppCompatActivity() {
@@ -29,6 +32,8 @@ class LoginActivity : AppCompatActivity() {
         btnLogin = findViewById(R.id.btn_login)
         etEmail = findViewById(R.id.et_username)
         etPassword = findViewById(R.id.et_password)
+
+        showPrompt()
 
         btnLogin.setOnClickListener {
             val email = etEmail.text.toString()
@@ -80,5 +85,59 @@ class LoginActivity : AppCompatActivity() {
 
         val currentUser = mAuth.currentUser
 
+    }
+
+    private fun showPrompt() {
+        val prefManager = PreferenceManager.getDefaultSharedPreferences(this)
+
+        if (!prefManager.getBoolean("LOGIN_TUTORIAL", false)) {
+            MaterialTapTargetPrompt.Builder(this)
+                .setTarget(R.id.rl_login_form)
+                .setPrimaryText("Form Login")
+                .setSecondaryText("Isi email dan password apabila sudah memiliki akun")
+                .setBackButtonDismissEnabled(true)
+                .setPromptStateChangeListener { prompt, state ->
+                    if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED ||
+                        state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED
+                    ) {
+                        val prefEditor = prefManager.edit()
+                        prefEditor.putBoolean("LOGIN_TUTORIAL", true)
+                        prefEditor.apply()
+                        showChapterPrompt()
+                    }
+                }
+                .setPromptBackground(RectanglePromptBackground())
+                .setPromptFocal(RectanglePromptFocal())
+                .show()
+        }
+    }
+
+    private fun showChapterPrompt() {
+        MaterialTapTargetPrompt.Builder(this)
+            .setTarget(R.id.btn_login)
+            .setPrimaryText("Tombol Masuk")
+            .setSecondaryText("Klik tombol masuk untuk melakukan proses login!")
+            .setBackButtonDismissEnabled(true)
+            .setPromptStateChangeListener { prompt, state ->
+                if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED ||
+                    state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED
+                ) {
+                    showRegisterButton()
+                }
+            }
+            .setPromptBackground(RectanglePromptBackground())
+            .setPromptFocal(RectanglePromptFocal())
+            .show()
+    }
+
+    private fun showRegisterButton(){
+        MaterialTapTargetPrompt.Builder(this)
+            .setTarget(R.id.btn_register)
+            .setPrimaryText("Tombol Daftar")
+            .setSecondaryText("Klik tombol daftar apabila belum memiliki akun")
+            .setBackButtonDismissEnabled(true)
+            .setPromptBackground(RectanglePromptBackground())
+            .setPromptFocal(RectanglePromptFocal())
+            .show()
     }
 }
