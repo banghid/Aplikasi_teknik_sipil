@@ -12,7 +12,6 @@ import com.example.aplikasipembelajarantekniksipil.database.DatabaseAccess
 import com.example.aplikasipembelajarantekniksipil.model.ChapterModel
 import com.example.aplikasipembelajarantekniksipil.model.KnowledgeModel
 import com.example.aplikasipembelajarantekniksipil.model.StageModel
-import com.example.aplikasipembelajarantekniksipil.model.UserStageModel
 import com.example.aplikasipembelajarantekniksipil.presenter.ChapterPresenter
 import com.example.aplikasipembelajarantekniksipil.presenter.KnowledgePresenter
 import com.example.aplikasipembelajarantekniksipil.view.view_interface.ChapterView
@@ -280,7 +279,4 @@ class ReportFragment : Fragment(), ChapterView, KnowledgeView {
         knowledgeData.addAll(knowledges)
     }
 
-    override fun loadUserStage(userStages: List<UserStageModel>) {
-
-    }
 }

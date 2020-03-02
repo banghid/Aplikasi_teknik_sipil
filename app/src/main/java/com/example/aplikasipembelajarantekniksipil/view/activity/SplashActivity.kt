@@ -3,6 +3,7 @@ package com.example.aplikasipembelajarantekniksipil.view.activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.preference.PreferenceManager
 import android.text.Html
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -56,16 +57,6 @@ class SplashActivity : AppCompatActivity() {
 
         })
 
-//        nextButton.setOnClickListener {
-//            if (nextButton.text == "Lanjut") {
-//                slidePager.currentItem = currentPage + 1
-//            } else {
-//                toMainActivity()
-//            }
-//        }
-//
-//        prevButton.setOnClickListener { slidePager.currentItem = currentPage - 1 }
-
         Handler().postDelayed(
             {
                 if (currentPage < 1) {
@@ -98,16 +89,33 @@ class SplashActivity : AppCompatActivity() {
     }
 
     fun toMainActivity() {
+
         var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
         if (mAuth.currentUser != null){
-            val intentNavdraw = Intent(this,NavdrawActivity::class.java)
-            startActivity(intentNavdraw)
+
+            val prefManager = PreferenceManager.getDefaultSharedPreferences(this)
+
+            if (!prefManager.getBoolean("MASTER_PROMPT", false)){
+                val introIntent = Intent(this, MenuIntro::class.java)
+                startActivity(introIntent)
+                val prefEditor = prefManager.edit()
+                prefEditor.putBoolean("MASTER_PROMPT", true)
+                prefEditor.apply()
+            }else{
+                val intentNavdraw = Intent(this,NavdrawActivity::class.java)
+                startActivity(intentNavdraw)
+            }
+
             finish()
         }else{
             val intentMainActivity = Intent(applicationContext, LoginActivity::class.java)
             startActivity(intentMainActivity)
             finish()
         }
+    }
+
+    private fun showPrompt(){
+
     }
 
 

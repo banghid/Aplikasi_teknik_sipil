@@ -3,7 +3,9 @@ package com.example.aplikasipembelajarantekniksipil.view.activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -17,6 +19,9 @@ import com.example.aplikasipembelajarantekniksipil.view.view_interface.QuizView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_quiz_detail.*
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
+import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectanglePromptBackground
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 import java.io.InputStream
 
 
@@ -44,6 +49,8 @@ class QuizDetailActivity : AppCompatActivity(), QuizView {
         val databaseAccess: DatabaseAccess = DatabaseAccess.getInstance(this)
         chapterId = quizPresenter.getKnowledge(quizList[currentIndex].knowledgeId, databaseAccess)
 
+        showPrompt()
+
         if (currentIndex < quizList.size - 1) {
 
             try {
@@ -57,6 +64,8 @@ class QuizDetailActivity : AppCompatActivity(), QuizView {
                 answer_textview1.text = optionList[0].optionDescription
                 answer_textview2.text = optionList[1].optionDescription
                 answer_textview3.text = optionList[2].optionDescription
+                answer_textview4.text = optionList[3].optionDescription
+                answer_textview5.text = optionList[4].optionDescription
                 ln_answer.visibility = View.VISIBLE
             } catch (e: Exception) {
                 Log.d(">>>>>QuizDetail", "Failed get option '" + e.message + "'")
@@ -67,6 +76,8 @@ class QuizDetailActivity : AppCompatActivity(), QuizView {
                 option_frame1.background = resources.getDrawable(R.drawable.button_card_selected)
                 option_frame2.background = resources.getDrawable(R.drawable.button_card)
                 option_frame3.background = resources.getDrawable(R.drawable.button_card)
+                option_frame4.background = resources.getDrawable(R.drawable.button_card)
+                option_frame5.background = resources.getDrawable(R.drawable.button_card)
                 hasSelect = true
 
                 selectedOption = optionList[0]
@@ -76,6 +87,8 @@ class QuizDetailActivity : AppCompatActivity(), QuizView {
                 option_frame1.background = resources.getDrawable(R.drawable.button_card)
                 option_frame2.background = resources.getDrawable(R.drawable.button_card_selected)
                 option_frame3.background = resources.getDrawable(R.drawable.button_card)
+                option_frame4.background = resources.getDrawable(R.drawable.button_card)
+                option_frame5.background = resources.getDrawable(R.drawable.button_card)
                 hasSelect = true
                 selectedOption = optionList[1]
             }
@@ -84,8 +97,30 @@ class QuizDetailActivity : AppCompatActivity(), QuizView {
                 option_frame1.background = resources.getDrawable(R.drawable.button_card)
                 option_frame2.background = resources.getDrawable(R.drawable.button_card)
                 option_frame3.background = resources.getDrawable(R.drawable.button_card_selected)
+                option_frame4.background = resources.getDrawable(R.drawable.button_card)
+                option_frame5.background = resources.getDrawable(R.drawable.button_card)
                 hasSelect = true
                 selectedOption = optionList[2]
+            }
+
+            option_card4.setOnClickListener {
+                option_frame1.background = resources.getDrawable(R.drawable.button_card)
+                option_frame2.background = resources.getDrawable(R.drawable.button_card)
+                option_frame3.background = resources.getDrawable(R.drawable.button_card)
+                option_frame4.background = resources.getDrawable(R.drawable.button_card_selected)
+                option_frame5.background = resources.getDrawable(R.drawable.button_card)
+                hasSelect = true
+                selectedOption = optionList[3]
+            }
+
+            option_card5.setOnClickListener {
+                option_frame1.background = resources.getDrawable(R.drawable.button_card)
+                option_frame2.background = resources.getDrawable(R.drawable.button_card)
+                option_frame3.background = resources.getDrawable(R.drawable.button_card)
+                option_frame4.background = resources.getDrawable(R.drawable.button_card)
+                option_frame5.background = resources.getDrawable(R.drawable.button_card_selected)
+                hasSelect = true
+                selectedOption = optionList[4]
             }
 
             next_quiz_button.setOnClickListener {
@@ -121,12 +156,16 @@ class QuizDetailActivity : AppCompatActivity(), QuizView {
             answer_textview1.text = optionList[0].optionDescription
             answer_textview2.text = optionList[1].optionDescription
             answer_textview3.text = optionList[2].optionDescription
+            answer_textview4.text = optionList[3].optionDescription
+            answer_textview5.text = optionList[4].optionDescription
             ln_answer.visibility = View.VISIBLE
 
             option_card1.setOnClickListener {
                 option_frame1.background = resources.getDrawable(R.drawable.button_card_selected)
                 option_frame2.background = resources.getDrawable(R.drawable.button_card)
                 option_frame3.background = resources.getDrawable(R.drawable.button_card)
+                option_frame4.background = resources.getDrawable(R.drawable.button_card)
+                option_frame5.background = resources.getDrawable(R.drawable.button_card)
                 hasSelect = true
                 selectedOption = optionList[0]
             }
@@ -135,6 +174,8 @@ class QuizDetailActivity : AppCompatActivity(), QuizView {
                 option_frame1.background = resources.getDrawable(R.drawable.button_card)
                 option_frame2.background = resources.getDrawable(R.drawable.button_card_selected)
                 option_frame3.background = resources.getDrawable(R.drawable.button_card)
+                option_frame4.background = resources.getDrawable(R.drawable.button_card)
+                option_frame5.background = resources.getDrawable(R.drawable.button_card)
                 hasSelect = true
                 selectedOption = optionList[1]
             }
@@ -143,8 +184,30 @@ class QuizDetailActivity : AppCompatActivity(), QuizView {
                 option_frame1.background = resources.getDrawable(R.drawable.button_card)
                 option_frame2.background = resources.getDrawable(R.drawable.button_card)
                 option_frame3.background = resources.getDrawable(R.drawable.button_card_selected)
+                option_frame4.background = resources.getDrawable(R.drawable.button_card)
+                option_frame5.background = resources.getDrawable(R.drawable.button_card)
                 hasSelect = true
                 selectedOption = optionList[2]
+            }
+
+            option_card4.setOnClickListener {
+                option_frame1.background = resources.getDrawable(R.drawable.button_card)
+                option_frame2.background = resources.getDrawable(R.drawable.button_card)
+                option_frame3.background = resources.getDrawable(R.drawable.button_card)
+                option_frame4.background = resources.getDrawable(R.drawable.button_card_selected)
+                option_frame5.background = resources.getDrawable(R.drawable.button_card)
+                hasSelect = true
+                selectedOption = optionList[3]
+            }
+
+            option_card5.setOnClickListener {
+                option_frame1.background = resources.getDrawable(R.drawable.button_card)
+                option_frame2.background = resources.getDrawable(R.drawable.button_card)
+                option_frame3.background = resources.getDrawable(R.drawable.button_card)
+                option_frame4.background = resources.getDrawable(R.drawable.button_card)
+                option_frame5.background = resources.getDrawable(R.drawable.button_card_selected)
+                hasSelect = true
+                selectedOption = optionList[4]
             }
 
             next_quiz_button.setOnClickListener {
@@ -201,6 +264,80 @@ class QuizDetailActivity : AppCompatActivity(), QuizView {
             .addOnSuccessListener {
                 Toast.makeText(this, "Berhasil menyimpan nilai", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun showPrompt(){
+        val prefManager = PreferenceManager.getDefaultSharedPreferences(this)
+
+        if (!prefManager.getBoolean("QUIZ_DET_TURORIAL", false)) {
+            MaterialTapTargetPrompt.Builder(this)
+                .setTarget(R.id.question_tv)
+                .setPrimaryText("Pertanyaan dalam quiz")
+                .setSecondaryText("Berisi pertanyaan untuk menjawab quiz.")
+                .setBackButtonDismissEnabled(true)
+                .setFocalColour(Color.DKGRAY)
+                .setPromptStateChangeListener { prompt, state ->
+                    if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED ||
+                        state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED
+                    ) {
+                        val prefEditor = prefManager.edit()
+                        prefEditor.putBoolean("QUIZ_DET_TURORIAL", true)
+                        prefEditor.apply()
+                        showQuizOrderPrompt()
+                    }
+                }
+                .setPromptBackground(RectanglePromptBackground())
+                .setPromptFocal(RectanglePromptFocal())
+                .show()
+        }
+    }
+
+    private fun showQuizOrderPrompt(){
+        MaterialTapTargetPrompt.Builder(this)
+            .setTarget(tv_order)
+            .setPrimaryText("Perintah Quiz")
+            .setSecondaryText("Peintah atau petunjuk dalam mengerjakan quiz.")
+            .setBackButtonDismissEnabled(true)
+            .setPromptBackground(RectanglePromptBackground())
+            .setPromptFocal(RectanglePromptFocal())
+            .setFocalColour(Color.DKGRAY)
+            .setPromptStateChangeListener { prompt, state ->
+                if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED ||
+                    state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED
+                ) {
+                    showOptionPrompt()
+                }
+            }
+            .show()
+    }
+
+    private fun showOptionPrompt(){
+        MaterialTapTargetPrompt.Builder(this)
+            .setTarget(ln_answer)
+            .setPrimaryText("List pilihan")
+            .setSecondaryText("Pilih jawaban yang paling benar dengan cara 'KLIK' tombol jawaban.")
+            .setBackButtonDismissEnabled(true)
+            .setPromptBackground(RectanglePromptBackground())
+            .setPromptFocal(RectanglePromptFocal())
+            .setPromptStateChangeListener { prompt, state ->
+                if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED ||
+                    state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED
+                ) {
+                    showNextButtonPrompt()
+                }
+            }
+            .show()
+    }
+
+    private fun showNextButtonPrompt(){
+        MaterialTapTargetPrompt.Builder(this)
+            .setTarget(next_quiz_button)
+            .setPrimaryText("Simpan Jawaban")
+            .setSecondaryText("Klik tombol 'Simpan Jawaban' untuk menyimpan jawaban dan lanjut ke quiz selanjutnya.")
+            .setBackButtonDismissEnabled(true)
+            .setPromptBackground(RectanglePromptBackground())
+            .setPromptFocal(RectanglePromptFocal())
+            .show()
     }
 
 }

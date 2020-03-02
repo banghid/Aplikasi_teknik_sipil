@@ -20,6 +20,7 @@ class DashboardFragment : Fragment(), ChapterView {
     private lateinit var chapterPresenter: ChapterPresenter
     private lateinit var chapterAdapter: ChapterAdapter
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +42,7 @@ class DashboardFragment : Fragment(), ChapterView {
         rv_chapter.setHasFixedSize(true)
         rv_chapter.adapter = chapterAdapter
 
+
     }
 
     override fun showChapter(chapters: List<ChapterModel>) {
@@ -48,6 +50,43 @@ class DashboardFragment : Fragment(), ChapterView {
         this.chaptersData.addAll(chapters)
         chapterAdapter.notifyDataSetChanged()
     }
+
+//    private fun showPrompt() {
+//      val prefManager = PreferenceManager.getDefaultSharedPreferences(view?.context)
+//
+//     if (!prefManager.getBoolean("masterPrompt", false)) {
+//
+//        val target:View? = view?.findViewById(R.id.rv_chapter)
+//            MaterialTapTargetPrompt.Builder(this)
+//                .setTarget(target)
+//                .setPrimaryText("Navigation Button")
+//                .setSecondaryText("Tab untuk menampilkan menu pada aplikasi")
+//                .setBackButtonDismissEnabled(true)
+//                .setClipToView(null)
+//                .setPromptStateChangeListener { prompt, state ->
+//                    if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED ||
+//                        state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED
+//                    ) {
+//                     val prefEditor = prefManager.edit()
+//                      prefEditor.putBoolean("masterPrompt", true)
+//                       prefEditor.apply()
+//                        showChapterPrompt()
+//                    }
+//                }.show()
+//      }
+//    }
+//
+//    private fun showChapterPrompt() {
+//        MaterialTapTargetPrompt.Builder(this as Fragment)
+//            .setTarget(R.id.rv_chapter)
+//            .setPrimaryText("List Materi")
+//            .setSecondaryText("Klik salah satu materi untuk menampilkan materi!")
+//            .setBackButtonDismissEnabled(true)
+//            .setPromptBackground(RectanglePromptBackground())
+//            .setPromptFocal(RectanglePromptFocal())
+//            .setClipToView(null)
+//            .show()
+//    }
 
 
 }

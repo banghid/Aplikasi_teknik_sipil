@@ -12,8 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".view.activity.MenuIntro"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".view.activity.RegisterActivity"
-            android:theme="@style/SplashTheme"></activity>
+            android:theme="@style/SplashTheme" />
         <activity
             android:name=".view.activity.LoginActivity"
             android:theme="@style/SplashTheme" />

@@ -2,9 +2,7 @@ package com.example.aplikasipembelajarantekniksipil.presenter
 
 import android.util.Log
 import com.example.aplikasipembelajarantekniksipil.database.DatabaseAccess
-import com.example.aplikasipembelajarantekniksipil.database.UserStageDatabase
 import com.example.aplikasipembelajarantekniksipil.model.KnowledgeModel
-import com.example.aplikasipembelajarantekniksipil.model.UserStageModel
 import com.example.aplikasipembelajarantekniksipil.view.view_interface.KnowledgeView
 
 class KnowledgePresenter(private var view:KnowledgeView){
@@ -45,16 +43,6 @@ class KnowledgePresenter(private var view:KnowledgeView){
 
         databaseAccess.closeDatabase()
 
-    }
-
-    fun getUserStage(chapterId: Int?, userStageDatabase: UserStageDatabase?){
-        try {
-            val userStages: ArrayList<UserStageModel> = ArrayList()
-            userStages.addAll(userStageDatabase?.userStageDao()!!.getByChapter(chapterId!!))
-            view.loadUserStage(userStages)
-        }catch (e: Exception){
-            Log.d(">>>>KnowledgePresenter", "fail to get user stage "+e.message)
-        }
     }
 
     fun getKnowledgeWhere(id:Int, databaseAccess: DatabaseAccess){

@@ -2,6 +2,7 @@ package com.example.aplikasipembelajarantekniksipil.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aplikasipembelajarantekniksipil.R
@@ -15,6 +16,9 @@ import com.example.aplikasipembelajarantekniksipil.view.view_interface.QuizView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_quiz_dashboard.*
+import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
+import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectanglePromptBackground
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 
 
 class QuizDashboardActivity : AppCompatActivity(), QuizView {
@@ -66,7 +70,7 @@ class QuizDashboardActivity : AppCompatActivity(), QuizView {
         rv_dashboard_answer.setHasFixedSize(true)
         rv_dashboard_answer.adapter = quizDashboardAdapter
 
-
+        showPrompt()
 
         start_button.setOnClickListener {
             val quizDetailIntent = Intent(applicationContext, QuizDetailActivity::class.java)
@@ -85,6 +89,60 @@ class QuizDashboardActivity : AppCompatActivity(), QuizView {
 
     override fun showOption(optionList: List<OptionModel>) {
 
+    }
+
+    private fun showPrompt(){
+        val prefManager = PreferenceManager.getDefaultSharedPreferences(this)
+
+        if (!prefManager.getBoolean("QUIZ_DAB_TURORIAL", false)) {
+            MaterialTapTargetPrompt.Builder(this)
+                .setTarget(R.id.last_score_tv)
+                .setPrimaryText("Nilai terakhir")
+                .setSecondaryText("Menampilkan nilai terkahir kali menjalankan Quiz.")
+                .setBackButtonDismissEnabled(true)
+                .setPromptStateChangeListener { prompt, state ->
+                    if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED ||
+                        state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED
+                    ) {
+                        val prefEditor = prefManager.edit()
+                        prefEditor.putBoolean("QUIZ_DAB_TURORIAL", true)
+                        prefEditor.apply()
+                        showLastAnswerPrompt()
+                    }
+                }
+                .setPromptBackground(RectanglePromptBackground())
+                .setPromptFocal(RectanglePromptFocal())
+                .show()
+        }
+    }
+
+    private fun showLastAnswerPrompt(){
+        MaterialTapTargetPrompt.Builder(this)
+            .setTarget(rv_dashboard_answer)
+            .setPrimaryText("Jawaban terakhir")
+            .setSecondaryText("Menampilkan jawaban terakhir quiz sesuai nomer.")
+            .setBackButtonDismissEnabled(true)
+            .setPromptBackground(RectanglePromptBackground())
+            .setPromptFocal(RectanglePromptFocal())
+            .setPromptStateChangeListener { prompt, state ->
+                if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED ||
+                    state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED
+                ) {
+                    showStartButtonPrompt()
+                }
+            }
+            .show()
+    }
+
+    private fun showStartButtonPrompt(){
+        MaterialTapTargetPrompt.Builder(this)
+            .setTarget(start_button)
+            .setPrimaryText("Tombol Mulai")
+            .setSecondaryText("Klik tombol 'Mulai' untuk mulai mengerjakan quiz.")
+            .setBackButtonDismissEnabled(true)
+            .setPromptBackground(RectanglePromptBackground())
+            .setPromptFocal(RectanglePromptFocal())
+            .show()
     }
 
 

@@ -41,7 +41,6 @@ class NavdrawActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             finish()
         }
         init()
-//        showPrompt()
     }
 
     private fun init() {
@@ -124,49 +123,11 @@ class NavdrawActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     override fun onSupportNavigateUp(): Boolean {
-//        return Navigation.findNavController(this, R.id.nav_host_fragment)
-//            .popBackStack(
-//                R.id.drawer_layout,
-//                true
-//            )
         supportFragmentManager.popBackStack()
         return NavigationUI.navigateUp(
             Navigation.findNavController(this, R.id.nav_host_fragment),
             drawerLayout
         )
     }
-
-//    private fun showPrompt(){
-//        val prefManager = PreferenceManager.getDefaultSharedPreferences(this)
-//
-//        if (!prefManager.getBoolean("masterPrompt", false)){
-//            MaterialTapTargetPrompt.Builder(this)
-//                .setTarget(R.id.textView)
-//                .setPrimaryText("Navigation Button")
-//                .setSecondaryText("Tab untuk menampilkan menu pada aplikasi")
-//                .setBackButtonDismissEnabled(true)
-//                .setPromptStateChangeListener { prompt, state ->
-//                    if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED ||
-//                        state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED){
-//                        val prefEditor = prefManager.edit()
-//                        prefEditor.putBoolean("masterPrompt", true)
-//                        prefEditor.apply()
-//                        showChapterPrompt()
-//                    }
-//                }.show()
-//        }
-//    }
-//
-//    private fun showChapterPrompt(){
-//        MaterialTapTargetPrompt.Builder(this)
-//            .setTarget(R.id.rv_chapter)
-//            .setPrimaryText("List Materi")
-//            .setSecondaryText("Klik salah satu materi untuk menampilkan materi!")
-//            .setBackButtonDismissEnabled(true)
-//            .setPromptBackground(RectanglePromptBackground())
-//            .setPromptFocal(RectanglePromptFocal())
-//            .show()
-//    }
-
 
 }

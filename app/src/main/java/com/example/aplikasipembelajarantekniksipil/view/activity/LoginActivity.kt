@@ -55,9 +55,18 @@ class LoginActivity : AppCompatActivity() {
                                 this, "Login berhasil.",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            val navdrawIntent = Intent(this,NavdrawActivity::class.java)
-                            startActivity(navdrawIntent)
-                            finish()
+                            val prefManager = PreferenceManager.getDefaultSharedPreferences(this)
+
+                            if (!prefManager.getBoolean("MASTER_PROMPT", false)){
+                                val introIntent = Intent(this, MenuIntro::class.java)
+                                startActivity(introIntent)
+                                val prefEditor = prefManager.edit()
+                                prefEditor.putBoolean("MASTER_PROMPT", true)
+                                prefEditor.apply()
+                            }else{
+                                val intentNavdraw = Intent(this,NavdrawActivity::class.java)
+                                startActivity(intentNavdraw)
+                            }
                         } else { // If sign in fails, display a message to the user.
                             Log.w(
                                 ">>>>>LoginActivity",
