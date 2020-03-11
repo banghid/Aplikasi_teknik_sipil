@@ -61,13 +61,14 @@ class KnowledgeHolder(view: View, viewType:Int):
     fun bindKnowledge(context: Context, knowledgeData: KnowledgeModel, userAuth: FirebaseAuth, knowledgeNumber:Int){
         knowledgeTitle.text = knowledgeData.knowledgeTitle
         knowledgeCaption.text = knowledgeData.knowledgeCaption
-        val numberText = (knowledgeNumber + 1).toString() + "."
-        knowledgeViewNumber.text = numberText
+
+
 //        val dbReference = FirebaseDatabase.getInstance().reference
 
 
         if (knowledgeData.knowledgeQuiz == "yes"){
             knowledgeButton.text = context.getString(R.string.kerjakan_button)
+            knowledgeViewNumber.visibility = View.GONE
             knowledgeButton.setOnClickListener{
                 val quizDashboardIntent = Intent(context.applicationContext,QuizDashboardActivity::class.java)
                 quizDashboardIntent.putExtra("KNOWLEDGE_DATA",knowledgeData)
@@ -75,6 +76,8 @@ class KnowledgeHolder(view: View, viewType:Int):
             }
         }else {
             knowledgeButton.text = context.getString(R.string.pelajari_button)
+            val numberText = ((knowledgeNumber + 2) / 2).toString() + "."
+            knowledgeViewNumber.text =  numberText
             knowledgeButton.setOnClickListener{
                 val knowledgeDetailIntent = Intent(context.applicationContext,KnowledgeDetailActivity::class.java)
                 knowledgeDetailIntent.putExtra("KNOWLEDGE_DATA",knowledgeData)

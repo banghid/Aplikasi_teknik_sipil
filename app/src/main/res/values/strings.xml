@@ -12,7 +12,6 @@
     <string name="teacher_id">NIP. 19550715 198003 1 006</string>
     <string name="teacher_email">Email : suparman@uny.ac.id</string>
     <string name="teacher_status">Dosen Pendidikan Teknik Sipil dan Perencanaan</string>
-    <string name="about_app_description">Aplikasi ini sengaja dibuat untuk membantu perkembangan pemahaman siswa terhadap kompetensi dasar yang telah disajikan. Terbatas dengan buku bacaan yang terkadang hanya dimiliki oleh guru saja, dengan aplikasi ini diharapkan siswa belajar dengan mudah dimanapun dan kapanpun. Dengan materi yang telah disesuaikan dengan silabus Sekolah Menengah Kejuruan pada Kurikulum 2013 edisi revisi. Didalam kurikulum 2013 edisi revisi, terdapat suatu tuntutan kepada siswa, untuk memulai pembelajaran secara mandiri dan tidak hanya terpaku pada penjelasan guru didalam kelas. Sehingga dengan aplikasi ini, diharapkan siswa dapat belajar mandiri, dengan waktu yang disesuaikan oleh siswa sendiri, serta tempat yang diinginkan oleh siswa guna melakukan pembelajaran.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

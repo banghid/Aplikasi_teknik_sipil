@@ -59,4 +59,6 @@ dependencies {
 
     implementation 'com.github.AppIntro:AppIntro:5.1.0'
 
+    implementation 'me.biubiubiu.justifytext:library:1.1'
+
 }

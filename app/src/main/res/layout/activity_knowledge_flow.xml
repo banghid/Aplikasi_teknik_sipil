@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.activity.KnowledgeFlowActivity">
 
+    <Button
+        android:id="@+id/kompetensi_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/runded_button"
+        android:text="Kompetensi Dasar"
+        android:textAllCaps="false"
+        android:textColor="#FFFF"
+        android:textSize="18sp" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/kompetensi_button"
         android:id="@+id/rv_knowledge_flow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,4 +26,4 @@
         android:paddingBottom="11dp"
         />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

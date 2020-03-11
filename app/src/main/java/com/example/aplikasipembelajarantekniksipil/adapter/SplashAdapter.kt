@@ -2,13 +2,13 @@ package com.example.aplikasipembelajarantekniksipil.adapter
 
 import android.content.Context
 import android.content.Context.LAYOUT_INFLATER_SERVICE
-import androidx.viewpager.widget.PagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.viewpager.widget.PagerAdapter
 import com.example.aplikasipembelajarantekniksipil.R
 
 class SplashAdapter(private val context: Context) : PagerAdapter(){
@@ -21,7 +21,7 @@ class SplashAdapter(private val context: Context) : PagerAdapter(){
 
     var slideDescription = arrayOf(
         "Dasinan adalah singkatan dari Dasar Konstruksi dan Bangunan.",
-        "Dasinan adalah suatu aplikasi yang membantu pembelajaran pada mata pelajaran Dasar-dasar Konstruksi setingkat kelas X pada sekolah mengengah kejuruan."
+        "Dasinan adalah suatu aplikasi yang membantu pembelajaran pada mata pelajaran Dasar-Dasar Konstruksi setingkat kelas X pada sekolah mengengah kejuruan."
     )
 
     var slideTitle = arrayOf(

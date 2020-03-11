@@ -12,8 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".view.activity.KompetensiActivity"
+            android:parentActivityName=".view.activity.KnowledgeFlowActivity"/>
+        <activity
             android:name=".view.activity.MenuIntro"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.RegisterActivity"
             android:theme="@style/SplashTheme" />

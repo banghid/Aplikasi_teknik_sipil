@@ -18,7 +18,7 @@ class MenuIntro : AppIntro() {
             R.drawable.materi_image,Color.DKGRAY))
         addSlide(AppIntroFragment.newInstance("Rapor","Menampilkan hasil belajar berupa progress belajar dan nilai quiz.",
             R.drawable.rapor_image,Color.DKGRAY))
-        addSlide(AppIntroFragment.newInstance("Sub BAB Mater","Menampilkan sub Bab berupa materi dan quiz.",
+        addSlide(AppIntroFragment.newInstance("Sub BAB Materi","Menampilkan sub Bab berupa materi dan quiz.",
             R.drawable.flow_image,Color.DKGRAY))
 
         showSkipButton(true)
